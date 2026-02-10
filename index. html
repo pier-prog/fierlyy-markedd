@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIERLYY MARKET | Egghead Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --egghead-blue: #00d2ff;
+            --egghead-pink: #ff007f;
+            --dark-space: #0a0b1e;
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { 
+            margin: 0; font-family: 'Poppins', sans-serif; 
+            background: var(--dark-space); color: white; overflow-x: hidden;
+        }
+
+        /* --- START SCREEN --- */
+        #start-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images8.alphacoders.com/134/1345381.png') no-repeat center;
+            background-size: cover; z-index: 5000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            transition: 0.5s;
+        }
+        .start-blur { position: absolute; top:0; left:0; width:100%; height:100%; backdrop-filter: blur(10px); z-index: -1; }
+        .start-text { 
+            font-family: 'Bangers', cursive; font-size: 1.8rem; margin-bottom: 20px; 
+            color: var(--egghead-blue); text-shadow: 2px 2px 0px black;
+        }
+        .btn-start {
+            padding: 15px 40px; font-family: 'Bangers', cursive; font-size: 2rem;
+            background: var(--egghead-blue); border: none; border-radius: 50px;
+            color: black; cursor: pointer; box-shadow: 0 0 20px var(--egghead-blue);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- NAVIGATION --- */
+        .hamburger {
+            position: fixed; top: 20px; left: 20px; z-index: 4000;
+            font-size: 2rem; cursor: pointer; color: var(--egghead-blue);
+            background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 10px;
+            display: none;
+        }
+        .sidebar {
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+            background: rgba(10, 11, 30, 0.98); backdrop-filter: blur(15px);
+            z-index: 4500; transition: 0.5s; padding-top: 60px;
+            border-right: 3px solid var(--egghead-blue);
+        }
+        .sidebar.active { left: 0; }
+        .sidebar a {
+            display: block; padding: 20px 30px; color: white;
+            text-decoration: none; font-family: 'Bangers', cursive;
+            font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-logo { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 20px; display:block; border: 3px solid var(--egghead-blue); object-fit: cover; }
+
+        /* --- SECTIONS --- */
+        .content-section {
+            display: none; min-height: 100vh; width: 100%; padding: 80px 20px 20px;
+            background: linear-gradient(to bottom, rgba(10,11,30,0.8), var(--dark-space)),
+                        url('https://images.alphacoders.com/132/1320491.png') no-repeat center top;
+            background-size: cover;
+        }
+        .content-section.active { display: block; }
+        .hero-title { font-family: 'Bangers', cursive; font-size: 3.5rem; text-align: center; color: var(--egghead-blue); text-shadow: 4px 4px 0px var(--egghead-pink); }
+
+        /* --- CARDS --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: rgba(0,0,0,0.6); border-radius: 15px; overflow: hidden; border: 2px solid #333; transition: 0.3s; cursor: pointer; }
+        .card:hover { border-color: var(--egghead-pink); transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 15px; text-align: center; }
+        .btn-card { background: var(--egghead-blue); color: black; padding: 8px 15px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; text-decoration: none; }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.9); z-index: 6000; justify-content: center; align-items: center;
+        }
+        .modal-content { 
+            background: #1a1a2e; width: 90%; max-width: 450px; padding: 25px; border-radius: 20px; 
+            border: 3px solid var(--egghead-pink); text-align: center;
+        }
+        .note-box { background: rgba(255,0,127,0.1); padding: 15px; border-radius: 10px; border-left: 4px solid var(--egghead-pink); margin: 15px 0; font-size: 0.9rem; color: #ff7675; }
+        .btn-order { background: var(--egghead-blue); color: black; padding: 12px; width: 100%; display: block; border-radius: 10px; font-weight: bold; text-decoration: none; margin-bottom: 10px; }
+        .btn-close { background: #444; color: white; border: none; padding: 10px; width: 100%; border-radius: 10px; cursor: pointer; }
+
+        /* --- CONTACT --- */
+        .contact-btn { background: var(--egghead-blue); color: black; padding: 15px; display: block; margin: 10px 0; border-radius: 10px; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="start-screen">
+    <div class="start-blur"></div>
+    <div class="start-text">MAU BELI KEPERLUANMU? TEKAN START DI SINI</div>
+    <button class="btn-start" onclick="enterMarket()">START MARKET</button>
+</div>
+
+<div class="hamburger" id="ham-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+<div class="sidebar" id="sidebar">
+    <img src="https://img2.pixhost.to/images/5655/693707899_xlyy-by-nika.jpg" class="sidebar-logo">
+    <a href="#" onclick="showSection('home')">HOME</a>
+    <a href="#" onclick="showSection('products')">PRODUCTS</a>
+    <a href="#" onclick="showSection('contact')">CONTACT</a>
+    <a href="#" onclick="showSection('help')">HELP</a>
+</div>
+
+<section id="home" class="content-section">
+    <h1 class="hero-title">FIERLYY MARKET</h1>
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid var(--egghead-blue);">
+        <h3>Apa itu Fierlyy Market?</h3>
+        <p>Pusat layanan digital masa depan ala Egghead! Kami menyediakan Bot WhatsApp, Panel Pterodactyl, dan Nokos dengan harga rakyat.</p>
+    </div>
+</section>
+
+<section id="products" class="content-section">
+    <h1 class="hero-title">OUR PROJECTS</h1>
+    <div class="product-grid">
+        <div class="card" onclick="openModal('m1')">
+            <img src="https://img2.pixhost.to/images/5655/693707899_xlyy-by-nika.jpg">
+            <div class="card-body"><h3>BOT WA FREE</h3><div class="btn-card">DETAIL & KLAIM</div></div>
+        </div>
+        <div class="card" onclick="openModal('m2')">
+            <img src="https://img2.pixhost.to/images/5655/693707882_xlyy-by-nika.jpg">
+            <div class="card-body"><h3>PANEL PTYRO</h3><div class="btn-card">CEK HARGA</div></div>
+        </div>
+        <div class="card" onclick="openModal('m3')">
+            <img src="https://img2.pixhead.to/images/5655/693707899_xlyy-by-nika.jpg">
+            <div class="card-body"><h3>BOT VIP</h3><div class="btn-card">CEK DETAIL</div></div>
+        </div>
+        <div class="card" onclick="openModal('m5')">
+            <img src="https://img2.pixhost.to/images/5655/693707899_xlyy-by-nika.jpg">
+            <div class="card-body"><h3>NOKOS RANDOM</h3><div class="btn-card">BELI</div></div>
+        </div>
+        <div class="card" onclick="openModal('m6')">
+            <img src="https://img2.pixhost.to/images/5655/693707899_xlyy-by-nika.jpg">
+            <div class="card-body"><h3>NOKOS INDO</h3><div class="btn-card">BELI</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="content-section">
+    <h1 class="hero-title">ADMIN SOSMED</h1>
+    <a href="https://wa.me/6289527933537" class="contact-btn">WHATSAPP</a>
+    <a href="https://t.me/fierlyyarkanee" class="contact-btn">TELEGRAM</a>
+    <a href="https://instagram.com/frdhnlyy" class="contact-btn" style="background: var(--egghead-pink);">INSTAGRAM</a>
+</section>
+
+<section id="help" class="content-section">
+    <h1 class="hero-title">HELP CENTER</h1>
+    <p>Jam Aktif: 09:00 - 22:00 WIB. Hubungi admin jika ada kendala produk.</p>
+</section>
+
+<div id="m1" class="modal"><div class="modal-content">
+    <h2>BOT WA FREE</h2>
+    <div class="note-box">Member wajib 30+ & selesaikan syarat admin.</div>
+    <a href="https://wa.me/6289527933537?text=Halo%20Admin%2C%20saya%20ingin%20klaim%20BOT%20WA%20FREE" class="btn-order">KLAIM SEKARANG</a>
+    <button class="btn-close" onclick="closeModal('m1')">TUTUP</button>
+</div></div>
+
+<div id="m2" class="modal"><div class="modal-content">
+    <h2>PANEL PTYRO</h2>
+    <p>Harga mulai 2k - 8k (Public/Private)</p>
+    <a href="https://wa.me/6289527933537?text=Halo%20Admin%2C%20saya%20ingin%20beli%20Panel%20Ptyro" class="btn-order">BELI SEKARANG</a>
+    <button class="btn-close" onclick="closeModal('m2')">TUTUP</button>
+</div></div>
+
+<div id="m3" class="modal"><div class="modal-content">
+    <h2>BOT VIP</h2>
+    <p>Harga: Rp 5.000 / Bulan</p>
+    <a href="https://wa.me/6289527933537?text=Halo%20Admin%2C%20saya%20ingin%20sewa%20Bot%20VIP" class="btn-order">BELI SEKARANG</a>
+    <button class="btn-close" onclick="closeModal('m3')">TUTUP</button>
+</div></div>
+
+<div id="m5" class="modal"><div class="modal-content">
+    <h2>NOKOS RANDOM</h2>
+    <p>Harga: 3k</p>
+    <div class="note-box">Random negara, No Garansi jika kenon.</div>
+    <a href="https://wa.me/6289527933537?text=Halo%20Admin%2C%20saya%20ingin%20beli%20Nokos%20Random" class="btn-order">BELI SEKARANG</a>
+    <button class="btn-close" onclick="closeModal('m5')">TUTUP</button>
+</div></div>
+
+<div id="m6" class="modal"><div class="modal-content">
+    <h2>NOKOS INDO</h2>
+    <p>Harga: 5k</p>
+    <div class="note-box">Bebas pilih negara / Indo. Lebih stabil.</div>
+    <a href="https://wa.me/6289527933537?text=Halo%20Admin%2C%20saya%20ingin%20beli%20Nokos%20Indo" class="btn-order">BELI SEKARANG</a>
+    <button class="btn-close" onclick="closeModal('m6')">TUTUP</button>
+</div></div>
+
+<script>
+    function enterMarket() {
+        document.getElementById('start-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('ham-btn').style.display = 'block';
+            showSection('home');
+        }, 500);
+    }
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+    function showSection(id) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.getElementById('sidebar').classList.remove('active');
+    }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+</script>
+</body>
+</html>
